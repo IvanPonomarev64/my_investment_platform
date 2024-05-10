@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>{% block title %}{% endblock %}</title>
+     <meta charset="UTF-8">
+
+     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="{% static 'css/templatemo-style.css' %}">
+</head>
+
+<body data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+               <span class="spinner-rotate"></span>
+          </div>
+     </section>
+
+     <!-- MENU -->
+     <section class="navbar custom-navbar navbar-fixed-top" role="navigation">
+          <div class="container">
+
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+
+                    <!-- lOGO TEXT HERE -->
+                    <a href="{% url 'home' %}" class="navbar-brand">Investment</a>
+               </div>
+
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+
+                    <!--If Auth-->
+                    {% if user.is_authenticated %}
+                         <ul class="nav navbar-nav navbar-nav-first">
+                              <li><a href="{% url 'home' %}" class="smoothScroll">Home</a></li>
+                              <li><a href="{% url 'about' %}" class="smoothScroll">About</a></li>
+                         </ul>
+                         <ul class="nav navbar-nav navbar-right">
+                              <li>
+                                   <h6>{{ user.first_name }}</h6>
+                                        <form method="post" action="{% url 'logout' %}">
+                                             {% csrf_token %}
+                                             <button type="submit"> Выход </button>
+                                        </form>
+                              </li>
+                              {% if not user.passport %}
+                                   <li>
+                                        <a href="{% url 'passport' %}">Добавить паспорт </a>
+                                   </li>
+
+                              {% else %}
+                                   {% if user.role == 'BR' %}
+                                        {% if not user.company %}
+                                             <li><a href="{% url 'company' %}">Добавить компанию</a></li>
+                                        {% endif %}
+                                   {% endif %}
+                              {% endif %}
+
+                         </ul>
+
+                    <!--If NOT Auth-->
+                         {% else %}
+                         <ul class="nav navbar-nav navbar-nav-first">
+                              <li><a href="{% url 'about' %}" class="smoothScroll">About</a></li>
+                         </ul>
+                         <ul class="nav navbar-nav navbar-right">
+                              <li>
+                                   <p>
+                                        {{ user }} ||
+                                        <a href="{% url 'login' %}"> Вход </a> |
+                                        <a href="{% url 'register' %}"> Регистрация </a>
+                                   </p>
+                              </li>
+                         {% endif %}
+
+                    </ul>
+               </div>
+
+          </div>
+     </section>
+     {% block content %}
+     {% endblock %}
+     <!-- FOOTER -->
+     <footer id="footer">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-4 col-sm-6">
+                         <div class="footer-info">
+                              <div class="section-title">
+                                   <h2>Наш адрес</h2>
+                              </div>
+                              <address>
+                                   <p>1800 dapibus a tortor pretium,<br> Integer nisl dui, ABC 12000</p>
+                              </address>
+
+                              <ul class="social-icon">
+                                   <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
+                                   <li><a href="#" class="fa fa-twitter"></a></li>
+                                   <li><a href="#" class="fa fa-instagram"></a></li>
+                              </ul>
+
+                              <div class="copyright-text">
+                                   <p>Copyright &copy; 2019 Company Name</p>
+
+                                   <p>Design: TemplateMo</p>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                         <div class="footer-info">
+                              <div class="section-title">
+                                   <h2>Contact Info</h2>
+                              </div>
+                              <address>
+                                   <p>+65 2244 1100, +66 1800 1100</p>
+                                   <p><a href="mailto:youremail.co">hello@youremail.co</a></p>
+                              </address>
+
+                              <div class="footer_menu">
+                                   <h2>Quick Links</h2>
+                                   <ul>
+                                        <li><a href="#">Career</a></li>
+                                        <li><a href="#">Investor</a></li>
+                                        <li><a href="#">Terms & Conditions</a></li>
+                                        <li><a href="#">Refund Policy</a></li>
+                                   </ul>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                         <div class="footer-info newsletter-form">
+                              <div class="section-title">
+                                   <h2>Newsletter Signup</h2>
+                              </div>
+                              <div>
+                                   <div class="form-group">
+                                        <form action="#" method="get">
+                                             <input type="email" class="form-control" placeholder="Enter your email" name="email" id="email" required="">
+                                             <input type="submit" class="form-control" name="submit" id="form-submit" value="Send me">
+                                        </form>
+                                        <span><sup>*</sup> Please note - we do not spam your email.</span>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+               </div>
+          </div>
+     </footer>
+
+     <!-- SCRIPTS -->
+     <script src="{% static 'js/jquery.js' %}"></script>
+     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+     <script src="{% static 'js/smoothscroll.js' %}"></script>
+     <script src="{% static 'js/custom.js' %}"></script>
+
+
+</body>
+
+</html>
