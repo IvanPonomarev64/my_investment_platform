@@ -1,11 +1,7 @@
-from django.conf import settings
-from django.core.mail import send_mail
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from users.forms import UserCreateForm, PassportCreateForm
-from users.models import Company
+from users.models import Company, Passport
 
 
 class RegisterView(CreateView):
@@ -32,10 +28,7 @@ class AddCompany(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        super().form_valid(form)
-        send_mail('Приветственное сообщение', 'Приветствуем Вас на нашем сайте',
-                  settings.EMAIL_HOST_USER, [self.request.user.email])
-        return HttpResponseRedirect(self.success_url)
+        return super().form_valid(form)
 
 
 

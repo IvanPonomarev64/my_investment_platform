@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+
 {% block title %} Добавление паспорта {% endblock %}
+
 {% block content %}
 
 <section id="">
@@ -11,14 +13,14 @@
                         {{ field }}: {{ error }}
                     {% endfor %}
                 {% endif %}
-                <form action="{% url 'passport' %}" method="post">
+                <form id="datepicker" action="{% url 'passport' %}" method="post">
                     <div class="section-title">
                         <h2>Добавьте данные паспорта</h2>
                     </div>
                     {% csrf_token %}
-                    {% for item in form %}
-                        <p><label>{{ item.label }}</label> {{item}}</p>
-                    {% endfor %}
+                        <table>
+                            {{ form.as_table }}
+                        </table>
                     <button class="col-md-4 col-sm-12">Get started</button>
                 </form>
             </div>

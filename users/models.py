@@ -14,15 +14,15 @@ class User(AbstractUser):
 
 
 class Passport(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='passport')
-    number = models.CharField(max_length=6)
-    series = models.CharField(max_length=4)
-    issued = models.TextField()
-    date_of_issued = models.DateField()
-    department_code = models.CharField(max_length=7)
-    date_of_birth = models.DateField(null=True, blank=True,)
-    place_of_birth = models.CharField(max_length=450)
-    registration_address = models.CharField(max_length=450)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='passport')
+    number = models.CharField(max_length=6, verbose_name='Номер')
+    series = models.CharField(max_length=4, verbose_name='Серия')
+    issued = models.TextField(verbose_name='Кем выдан')
+    date_of_issued = models.DateField(verbose_name='Дата выдачи')
+    department_code = models.CharField(max_length=7, verbose_name='Код подразделения')
+    date_of_birth = models.DateField(verbose_name='Дата рождения')
+    place_of_birth = models.CharField(max_length=450, verbose_name='Место рождения')
+    registration_address = models.CharField(max_length=450, verbose_name='Адрес регистрации')
 
 
 class PersonalAccount(models.Model):
@@ -39,4 +39,4 @@ class Company(models.Model):
     type = models.CharField(max_length=400, verbose_name='Вид деятельности')
     revenue_year = models.CharField(max_length=50, verbose_name='Выручка за год')
     profit_year = models.CharField(max_length=50, verbose_name='Доход за год')
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='company')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='company')
